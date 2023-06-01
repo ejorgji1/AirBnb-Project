@@ -2,10 +2,7 @@
 
 Database Schema Design
 <insert database schema design here>
-  ![image](https://github.com/ejorgji1/AirBnb-Project/assets/115188858/8932a6eb-9f7d-47b2-93a6-566b1f03778a)
-
-
-API Documentation
+   ![Untitled](https://github.com/ejorgji1/AirBnb-Project/assets/115188858/606b3187-8f70-48db-8391-317ca7240fb0)API Documentation
 USER AUTHENTICATION/AUTHORIZATION
 All endpoints that require authentication
 All endpoints that require a current user to be logged in.
