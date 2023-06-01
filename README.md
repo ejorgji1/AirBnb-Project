@@ -2,6 +2,8 @@
 
 Database Schema Design
 <insert database schema design here>
+  ![image](https://github.com/ejorgji1/AirBnb-Project/assets/115188858/8932a6eb-9f7d-47b2-93a6-566b1f03778a)
+
 
 API Documentation
 USER AUTHENTICATION/AUTHORIZATION
