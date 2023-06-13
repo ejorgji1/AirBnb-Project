@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       {
         // Define one-to-many association
-        Reviews.hasMany(models.ReviewImages, { foreignKey: 'reviewId' , onDelete: 'CASCADE', hooks: true});
+        Reviews.hasMany(models.ReviewImages, { foreignKey: 'reviewId', onDelete: "CASCADE", hooks: true});
       }
       Reviews.belongsTo(models.Spots, { foreignKey: 'Id' });
       Reviews.belongsTo(models.Users, { foreignKey: 'Id' });
@@ -36,6 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull : false
     },
+    createdAt: {
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Reviews',

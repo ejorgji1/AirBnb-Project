@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       ReviewImages.belongsTo(models.Reviews, { foreignKey: 'Id' });
     }
     }
-  }
-  ReviewImages.init({
+  ReviewImages.init(
+    {
     reviewId: {
       type: DataTypes.INTEGER,
       allowNull : false
@@ -24,7 +24,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull : false
     },
-  }, {
+    createdAt: {
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      type: DataTypes.DATE
+    }
+  }, 
+  {
     sequelize,
     modelName: 'ReviewImages',
   });

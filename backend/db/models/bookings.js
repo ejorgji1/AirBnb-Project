@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       Bookings.belongsTo(models.Spots, { foreignKey: 'Id' });
     }
     }
-  }
   Bookings.init({
     spoId:  { 
       type : DataTypes.INTEGER,
@@ -39,6 +38,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [60, 60]
       }
+    },
+    createdAt: {
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      type: DataTypes.DATE
     }
   }, {
     sequelize,
