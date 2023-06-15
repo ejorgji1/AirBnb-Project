@@ -9,6 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = "Reviews"
     await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
@@ -30,7 +31,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'Id'
+          key: 'id'
         },
         onDelete: 'CASCADE'
       },
