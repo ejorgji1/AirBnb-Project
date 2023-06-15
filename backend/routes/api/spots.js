@@ -162,86 +162,9 @@ router.get('/current', requireAuth, async ( req, res ) => {
       .withMessage('Price must be a valid number'),
     handleValidationErrors
   ];
-// Create a Spot
-router.post('/', requireAuth, validateSpot, async (req, res) => {
-  const { address, city, state, country, lat,lng, name, description, price } = req.body
-  const ownerId = req.user.id
-
-  const spot = await Spot.create({
-    ownerId,
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-  });
-
-  const validatedSpot = {
-    id: spot.id,
-    ownerId: spot.ownerId,
-    address: spot.address,
-    city: spot.city,
-    state: spot.state,
-    country: spot.country,
-    lat: spot.lat,
-    lng: spot.lng,
-    name: spot.name,
-    description: spot.description,
-    price: spot.price,
-    createdAt: spot.createdAt,
-    updatedAt: spot.updatedAt,
-  };
-  return res.json(validatedSpot)
-})
 
 
-//Add an Image to a Spot based on the Spot's id
-
-router.post("/:spotId/images", requireAuth, async (req, res) => {
-  const { url, preview } = req.body;
-  const userId = req.user.id;
-  const spotId = parseInt(req.params.spotId);
-  let spot = await Spot.findByPk(Id);
-
-  if (!spot) {
-    return res.status(404).json({ message: "Spot couldn't be found" });
-  }
-
-  if (userId === spot.ownerId) {
-    const image = await spot.createSpotImage({ Id, url, preview });
-    const newImage = {
-      id: image.id,
-      url: image.url,
-      preview: image.preview,
-    };
-    res.json(newImage);
-  } else {
-    res.status(403).json({ message: "Forbidden" });
-  }
-});
 
 
-//Delete a Spot
-
-router.delete("/:spotId", requireAuth, async (req, res) => {
-  const userId = req.user.id;
-  const spotId = parseInt(req.params.spotId);
-  let spot = await Spot.findByPk(spotId);
-
-  if (!spot) {
-    return res.status(404).json({ message: "Spot couldn't be found" });
-  }
-
-  if (userId === spot.ownerId) {
-    await spot.destroy();
-    res.json({ message: "Successfully deleted" });
-  } else {
-    res.status(403).json({ message: "Forbidden" });
-  }
-});
 
 module.exports = router;
