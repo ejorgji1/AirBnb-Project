@@ -13,19 +13,19 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
        
-        spotid: 1,
+        spotId: 1,
         url: 'Fake Spot Image1',
         preview: true
       },
       {
        
-        spotid: 2,
+        spotId: 2,
         url: 'Fake Spot Image2',
         preview: false
       },
       {
         
-        spotid: 3,
+        spotId: 3,
         url: 'Fake Spot Image3',
         preview: false
       }
