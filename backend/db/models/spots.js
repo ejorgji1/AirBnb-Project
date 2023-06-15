@@ -63,6 +63,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull : false
     },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
     createdAt: {
       type: DataTypes.DATE
     },

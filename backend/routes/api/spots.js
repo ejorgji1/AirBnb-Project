@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
       where : {spotID: spot.id}
     })
    
-    spot.dataValues.previewImage = previewImage.url 
+    spot.dataValues.previewImage = previewImage.url || '';
 
     arraySpots.push(spot.toJSON());
   }
@@ -67,7 +67,7 @@ router.get('/current', requireAuth, async ( req, res ) => {
         where : {spotID: spot.id}
       })
      
-      spot.dataValues.previewImage = previewImage.url 
+      spot.dataValues.previewImage = previewImage.url || '';
   
       arraySpots.push(spot.toJSON());
     }
@@ -164,7 +164,113 @@ router.get('/current', requireAuth, async ( req, res ) => {
   ];
 
 
+  // Create a Spot 
 
+  router.post("/", validateSpot, requireAuth, async (req, res) => {
+    const { address, city, state, country, lat, lng, name, description, price } =
+      req.body;
+    const ownerId = req.user.id;
+  
+    const spot = await Spot.create({
+      ownerId,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    });
+  
+    const spotData = {
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt,
+    };
 
+    return res.json(spotData);
+  });
+
+  //Add an Image to a Spot based on the Spot's id
+
+  router.post("/:spotId/images", requireAuth, async (req, res) => {
+    const { url, preview } = req.body;
+    const userId = req.user.id;
+    const spotId = req.params.spotId
+    let spot = await Spot.findByPk(spotId);
+  
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  
+    if (userId === spot.ownerId) {
+      const image = await spot.createSpotImage({ spotId, url, preview });
+      const newImage = {
+        id: image.id,
+        url: image.url,
+        preview: image.preview,
+      };
+      res.json(newImage);
+    } 
+  });
+
+  // Edit a Spot
+  router.put("/:spotId", validateSpot, requireAuth, async (req, res) => {
+    const { address, city, state, country, lat, lng, name, description, price } =
+      req.body;
+    const userId = req.user.id;
+    const spotId = req.params.spotId;
+    let spot = await Spot.findByPk(spotId);
+  
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  
+    if (userId === spot.ownerId) {
+      spot.address = address;
+      spot.city = city;
+      spot.state = state;
+      spot.country = country;
+      spot.lat = lat;
+      spot.lng = lng;
+      spot.name = name;
+      spot.description = description;
+      spot.price = price;
+  
+      await spot.save();
+  
+      res.json(spot);
+    } 
+  });
+
+// Delete a Spot
+router.delete("/:spotId", requireAuth, async (req, res) => {
+  const user = req.user.id;
+  const spotId = req.params.spotId;
+   
+
+  let spot = await Spot.findByPk(spotId);
+
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  }
+
+  if (user === spot.ownerId) {
+    await spot.destroy();
+    res.json({ message: "Successfully deleted" });
+  } 
+});
 
 module.exports = router;
