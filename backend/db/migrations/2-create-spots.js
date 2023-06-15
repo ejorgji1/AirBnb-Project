@@ -22,7 +22,7 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onDelete: 'cascade'
       },
       address: {
         allowNull: false,

@@ -21,7 +21,7 @@ module.exports = {
        
         spotid: 2,
         url: 'Fake Spot Image2',
-        preview: true
+        preview: false
       },
       {
         

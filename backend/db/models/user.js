@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       {
         // Define one-to-many association
-        User.hasMany(models.Bookings, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
+        User.hasMany(models.Booking, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
       }
       {
         // Define one-to-many association
-        User.hasMany(models.Spots, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true });
+        User.hasMany(models.Spot, { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true });
       }
       {
         // Define one-to-many association
-        User.hasMany(models.Reviews, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
+        User.hasMany(models.Review, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
       }
     }
   };
