@@ -4,7 +4,7 @@ Database Schema Design
 <insert database schema design here>
    ![Untitled](https://github.com/ejorgji1/AirBnb-Project/assets/115188858/606b3187-8f70-48db-8391-317ca7240fb0)
 
-   ## API Documentation
+  ## API Documentation
 
 ## USER AUTHENTICATION/AUTHORIZATION
 
@@ -53,7 +53,7 @@ Returns the information about the current user that is logged in.
   * URL: /api/session
   * Body: none
 
-* Successful Response when there is a logged in user
+* Successful Response
   * Status Code: 200
   * Headers:
     * Content-Type: application/json
@@ -69,18 +69,7 @@ Returns the information about the current user that is logged in.
         "username": "JohnSmith"
       } 
     }
-    ```
-
-* Successful Response when there is no logged in user
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "user": null
-    }
+    
     ```
 
 ### Log In a User
@@ -91,7 +80,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /api/login
+  * URL: /api/session
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -157,7 +146,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /api/signup
+  * URL: /api/users
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -180,13 +169,11 @@ user's information.
 
     ```json
     {
-      "user": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com",
-        "username": "JohnSmith"
-      }
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "username": "JohnSmith"
     }
     ```
 
@@ -287,7 +274,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/users/:userId/spots
+  * URL: /api/spots/current
   * Body: none
 
 * Successful Response
@@ -634,7 +621,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/users/:userId/reviews
+  * URL: /api/reviews/current
   * Body: none
 
 * Successful Response
@@ -744,7 +731,7 @@ Create and return a new review for a spot specified by id.
 
 * Require Authentication: true
 * Request
-  * Method:POST
+  * Method: POST
   * URL: /api/spots/:spotId/reviews
   * Headers:
     * Content-Type: application/json
@@ -804,7 +791,7 @@ Create and return a new review for a spot specified by id.
     ```
 
 * Error response: Review from the current user already exists for the Spot
-  * Status Code: 500
+  * Status Code: 403
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -880,7 +867,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PUT
-  * URL:  /api/reviews/:reviewId
+  * URL: /api/reviews/:reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -982,7 +969,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/users/:userId/bookings
+  * URL: /api/bookings/current
   * Body: none
 
 * Successful Response
@@ -1317,7 +1304,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/images/:imageId
+  * URL: /api/spot-images/:imageId
   * Body: none
 
 * Successful Response
@@ -1352,7 +1339,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/images/:imageId
+  * URL: /api/review-images/:imageId
   * Body: none
 
 * Successful Response
@@ -1406,7 +1393,7 @@ Return spots filtered by query parameters.
 
     ```json
     {
-      "Spots": [
+      "Spots":[
         {
           "id": 1,
           "ownerId": 1,
@@ -1450,3 +1437,4 @@ Return spots filtered by query parameters.
         "maxPrice": "Maximum price must be greater than or equal to 0"
       }
     }
+    ```

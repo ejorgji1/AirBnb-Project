@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     }
   Booking.init({
-    spoId:  { 
+    spotId:  { 
       type : DataTypes.INTEGER,
       allowNull : false 
     },
@@ -31,13 +31,6 @@ module.exports = (sequelize, DataTypes) => {
     endDate: {
       type: DataTypes.DATE,
       allowNull: false
-    },
-    hashedPassword: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false,
-      validate: {
-        len: [60, 60]
-      }
     },
     createdAt: {
       type: DataTypes.DATE
