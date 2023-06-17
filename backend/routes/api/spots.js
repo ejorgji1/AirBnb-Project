@@ -117,7 +117,7 @@ router.get('/', queryParamValidator, async (req, res) => {
 
     const previewImage = await SpotImage.findOne({
 
-      where : {spotid: spot.id}
+      where : {spotId: spot.id}
 
     })
    
