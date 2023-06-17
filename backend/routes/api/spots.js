@@ -136,7 +136,7 @@ router.get('/', queryParamValidator, async (req, res) => {
 //Get all Spots owned by the Current User
 
 router.get('/current', requireAuth, async ( req, res ) => {
-  console.log(req.user)
+  
 
   const userId = req.user.id 
  
@@ -149,6 +149,7 @@ router.get('/current', requireAuth, async ( req, res ) => {
     const arraySpots = [];
 
     for (let spot of spots) {
+    
       const reviews = await spot.getReviews();
   
       let sum = 0;
@@ -159,9 +160,13 @@ router.get('/current', requireAuth, async ( req, res ) => {
       spot.dataValues.avgRating = avg.toFixed(2);
   
       const previewImage = await SpotImage.findOne({
+<<<<<<< HEAD
 
         where : {spotId: spot.id}
 
+=======
+        where : {spotId: spot.id }
+>>>>>>> dev
       })
      
       if (previewImage) {
