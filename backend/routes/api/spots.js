@@ -116,7 +116,11 @@ router.get('/', queryParamValidator, async (req, res) => {
     spot.dataValues.avgRating = avg.toFixed(2);
 
     const previewImage = await SpotImage.findOne({
+<<<<<<< HEAD
       where : {spotid: spot.id}
+=======
+      where : {spotId: spot.id }
+>>>>>>> dev
     })
    
     if (previewImage) {
@@ -157,7 +161,11 @@ router.get('/current', requireAuth, async ( req, res ) => {
       spot.dataValues.avgRating = avg.toFixed(2);
   
       const previewImage = await SpotImage.findOne({
+<<<<<<< HEAD
         where : {spotId: spot.id}
+=======
+        where : {spotID: spot.id }
+>>>>>>> dev
       })
      
       if (previewImage) {
