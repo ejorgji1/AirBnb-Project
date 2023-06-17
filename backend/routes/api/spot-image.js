@@ -15,17 +15,20 @@ router.delete('/:imageId', requireAuth, async(req, res) => {
     const image = await SpotImage.findByPk(imageId);
 
     const spotImage = await SpotImage.findOne({
-        where : {spotId : imageId},
+        where : {id : imageId},
         include: [
             {model : Spot,
             where: {ownerId : user}
         }
         ]
     })
-    if (!spotImage) {
-        return res.status(404).json({ message: "Spot Image couldn't be found" });
+    if (!image) {
+        return res.status(404).json({ message: " Image couldn't be found" });
+    }
+     if (!spotImage) {
+        return res.status(403).json({ message: "Forbidden" });
       }
-      await spotImage.destroy();
+      await image.destroy();
       res.json({message: "Successfully deleted"})
 
 })
