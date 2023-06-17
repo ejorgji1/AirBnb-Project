@@ -18,6 +18,12 @@ const router = express.Router();
           },
           include: [
             { model: User, attributes: ["id", "firstName", "lastName"] },
+            {
+                model: Spot,
+                attributes: {
+                  exclude: ["description", "createdAt", "updatedAt"],
+                },
+            },
             { model: ReviewImage, attributes: ["id", "url"] },
           ],
         });
@@ -38,7 +44,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         return res.status(404).json({message: "Review couldn't be found"})
     }
 
-    //add error handling: cannot add any more images because there is a maximum of 10 images per source
+    
     const existingImagesCount = await review.countReviewImages();
 
     if (existingImagesCount >= 10) {
@@ -85,6 +91,8 @@ const validateReview = [
         existingRev.stars = stars;
         await existingRev.save();
         res.json(existingRev);
+    } else {
+        res.status(403).json({ message: "Forbidden" });
     }
   })
 
@@ -103,6 +111,8 @@ const validateReview = [
      if( userId === review.userId) {
         await review.destroy();
         res.json({message : "Successfully deleted"})
+     } else {
+        res.status(403).json({ message: "Forbidden" });
      }
 
   })

@@ -8,9 +8,98 @@ const { Op } = require("sequelize")
 const router = express.Router();
 
 
+const queryParamValidator = [
+  check("page")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("Page must be greater than or equal to 1"),
+  check("size")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("Size must be greater than or equal to 1"),
+  check("minLat")
+    .optional()
+    .isNumeric()
+    .withMessage("Minimum latitude is invalid"),
+  check("maxLat")
+    .optional()
+    .isNumeric()
+    .withMessage("Maximum latitude is invalid"),
+  check("minLng")
+    .optional()
+    .isNumeric()
+    .withMessage("Minimum longitude is invalid"),
+  check("maxLng")
+    .optional()
+    .isNumeric()
+    .withMessage("Maximum longitude is invalid"),
+  check("minPrice")
+    .optional()
+    .isNumeric({ min: 0 })
+    .withMessage("Minimum price must be greater than or equal to 0"),
+  check("maxPrice")
+    .optional()
+    .isNumeric({ min: 0 })
+    .withMessage("Maximum price must be greater than or equal to 0"),
+  handleValidationErrors,
+];
+
 // Get all spots 
 
-router.get('/', async (req, res) => {
+router.get('/', queryParamValidator, async (req, res) => {
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
+    req.query;
+
+  let where = {};
+
+  if (minLat) {
+    where.lat = {
+      [Op.gte]: minLat,
+    };
+  }
+
+  if (maxLat) {
+    where.lat = {
+      [Op.lte]: maxLat,
+    };
+  }
+
+  if (minLng) {
+    where.lng = {
+      [Op.gte]: minLng,
+    };
+  }
+
+  if (maxLng) {
+    where.lng = {
+      [Op.lte]: maxLng,
+    };
+  }
+
+  if (minPrice) {
+    where.price = {
+      [Op.gte]: minPrice,
+    };
+  }
+
+  if (maxPrice) {
+    where.price = {
+      [Op.lte]: maxPrice,
+    };
+  }
+
+  page = page === undefined ? 1 : parseInt(page);
+  size = size === undefined ? 20 : parseInt(size);
+  if (page > 10) page = 10;
+  if (size > 20) size = 20;
+
+  let limit, offset;
+  if (page >= 1 && size >= 1) {
+    limit = size;
+    offset = (page - 1) * size;
+  }
+
+
   const spots = await Spot.findAll({
   })
 
@@ -30,11 +119,15 @@ router.get('/', async (req, res) => {
       where : {spotID: spot.id}
     })
    
-    spot.dataValues.previewImage = previewImage.url || '';
+    if (previewImage) {
+      spot.dataValues.previewImage = previewImage.url;
+    } else {
+      spot.dataValues.previewImage = '';
+    }
 
     arraySpots.push(spot.toJSON());
   }
-  res.json({ Spots: arraySpots });
+  res.json({ Spots: arraySpots, page, size });
 
 })
 
@@ -67,7 +160,11 @@ router.get('/current', requireAuth, async ( req, res ) => {
         where : {spotID: spot.id}
       })
      
-      spot.dataValues.previewImage = previewImage.url || '';
+      if (previewImage) {
+        spot.dataValues.previewImage = previewImage.url;
+      } else {
+        spot.dataValues.previewImage = '';
+      };
   
       arraySpots.push(spot.toJSON());
     }
@@ -223,7 +320,9 @@ router.get('/current', requireAuth, async ( req, res ) => {
         preview: image.preview,
       };
       res.json(newImage);
-    } 
+    } else {
+      res.status(403).json({ message: "Forbidden" });
+     }
   });
 
   // Edit a Spot
@@ -252,7 +351,9 @@ router.get('/current', requireAuth, async ( req, res ) => {
       await spot.save();
   
       res.json(spot);
-    } 
+    } else {
+      res.status(403).json({ message: "Forbidden" });
+    }
   });
 
 // Delete a Spot
@@ -270,7 +371,9 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   if (user === spot.ownerId) {
     await spot.destroy();
     res.json({ message: "Successfully deleted" });
-  } 
+  } else {
+    res.status(403).json({ message: "Forbidden" });
+  }
 });
 
 
@@ -344,5 +447,42 @@ router.post('/:spotId/reviews', requireAuth, validateReview ,async(req, res) => 
   return res.json(safeReview);
 
 })
+
+//Get all Bookings for a Spot based on the Spot's id
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const spotId = req.params.spotId
+  const spot = await Spot.findByPk(spotId);
+
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  }
+
+  if (userId !== spot.ownerId) {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: spotId,
+      },
+      attributes: ["spotId", "startDate", "endDate"],
+    });
+    res.json({ Bookings: bookings });
+  } else {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: spotId,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+      ],
+    });
+    res.json({ Bookings: bookings });
+  }
+});
+
+//Create a Booking from a Spot based on the Spot's id
+
 
 module.exports = router;
