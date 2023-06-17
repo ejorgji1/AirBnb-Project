@@ -9,23 +9,55 @@ const router = express.Router();
 
 //Get all of the Current User's Bookings
 
-router.get('/current', requireAuth, async(req, res) => {
-    const user = req.user.id;
+// router.get('/current', requireAuth, async(req, res) => {
+//     const user = req.user.id;
    
-         const bookings = await Booking.findAll({
-        where : {
-            userId : user
-        },include : [
-            {
-                model : Spot,
-                attributes : {
-                    include: ['id','ownerId','address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price' ]
-                }
-            }
-        ]
+//          const bookings = await Booking.findAll({
+//         where : {
+//             userId : user
+//         },include : [
+//             {
+//                 model : Spot,
+//                 attributes : {
+//                     include: ['id','ownerId','address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price' ]
+//                 }
+//             }
+//         ]
+//     })
+//     res.json({ Bookings : bookings })
+// })
+
+router.get('/current',requireAuth, async (req, res) => {
+        const results = [];
+        const userId = req.user.id;
+        const currentUserBookings = await Booking.findAll({
+            where: { userId: userId },
+            include: [
+                { model: Spot, attributes: { exclude: ['spotId', 'description', 'createdAt', 'updatedAt'] } },
+            ]
+        });
+
+        for (let i = 0; i < currentUserBookings.length; i++) {
+            let booking = currentUserBookings[i];
+            booking = booking.toJSON();
+
+            
+            for (let spot of currentUserBookings) {
+                spot = spot.toJSON();
+                const previewImage = await SpotImage.findAll({
+                    raw: true,
+                    where: { preview: true, spotId: spot.id },
+                    attributes: ['preview']
+                });
+                if (previewImage.length) booking.Spot.previewImage = previewImage[0].url;
+                if (!previewImage.length) booking.Spot.previewImage = null;
+            };
+
+            results.push(booking);
+        };
+
+        return res.json({ Bookings: results })
     })
-    res.json({ Bookings : bookings })
-})
 
 // Delete a Booking
 
