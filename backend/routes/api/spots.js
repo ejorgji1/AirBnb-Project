@@ -351,7 +351,9 @@ router.get('/current', requireAuth, async ( req, res ) => {
       await spot.save();
   
       res.json(spot);
-    } 
+    } else {
+      res.status(403).json({ message: "Forbidden" });
+    }
   });
 
 // Delete a Spot
@@ -369,7 +371,9 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   if (user === spot.ownerId) {
     await spot.destroy();
     res.json({ message: "Successfully deleted" });
-  } 
+  } else {
+    res.status(403).json({ message: "Forbidden" });
+  }
 });
 
 
@@ -443,5 +447,42 @@ router.post('/:spotId/reviews', requireAuth, validateReview ,async(req, res) => 
   return res.json(safeReview);
 
 })
+
+//Get all Bookings for a Spot based on the Spot's id
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const spotId = req.params.spotId
+  const spot = await Spot.findByPk(spotId);
+
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  }
+
+  if (userId !== spot.ownerId) {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: spotId,
+      },
+      attributes: ["spotId", "startDate", "endDate"],
+    });
+    res.json({ Bookings: bookings });
+  } else {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: spotId,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+      ],
+    });
+    res.json({ Bookings: bookings });
+  }
+});
+
+//Create a Booking from a Spot based on the Spot's id
+
 
 module.exports = router;
