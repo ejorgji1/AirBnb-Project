@@ -50,7 +50,7 @@ router.get('/current',requireAuth, async (req, res) => {
                     attributes: ['preview']
                 });
                 if (previewImage.length) booking.Spot.previewImage = previewImage[0].url;
-                if (!previewImage.length) booking.Spot.previewImage = null;
+                if (!previewImage.length) booking.Spot.previewImage = '';
             };
 
             results.push(booking);
