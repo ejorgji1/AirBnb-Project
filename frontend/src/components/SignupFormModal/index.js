@@ -111,6 +111,6 @@ function SignupFormModal() {
       </form>
     </>
   );
-}
+};
 
 export default SignupFormModal;
