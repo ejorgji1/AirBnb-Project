@@ -2,6 +2,10 @@ import { csrfFetch } from "./csrf";
 
 const GET_ALL_SPOTS = 'spots/spots'
 const GET_SPOT_DETAILS= 'spots/spot'
+const DELETE_SPOT = 'spots/delete'
+const UPDATE_SPOT = 'spots/update'
+const GET_USER_SPOTS='spots/currentUser'
+
 
 const getAllSpotsAction = spots => ({
     type: GET_ALL_SPOTS,
@@ -13,6 +17,20 @@ const getSpotDetails = spot => ({
   spot
 })
 
+const deleteSpot = spotId => ({
+  type: DELETE_SPOT,
+  spotId
+})
+
+const getUserSpots = spots => ({
+  type: GET_USER_SPOTS,
+  spots
+})
+
+const updateSpot = spot => ({
+  type: UPDATE_SPOT,
+  spot
+})
 
 export const allSpotsThunk = () => async (dispatch) => {
       const res = await csrfFetch('/api/spots/');
@@ -38,6 +56,18 @@ export const allSpotsThunk = () => async (dispatch) => {
           return errorData
       }
   }
+
+  export const getUserSpotsThunk = () => async (dispatch) => {
+    const res = await csrfFetch('/api/spots/current')
+    const spots = await res.json();
+    if (res.ok) {
+        dispatch(getUserSpots(spots["Spots"]))
+        return spots;
+    } else {
+        const errorData = await res.json()
+        return errorData
+    }
+}
   
   export const createSpotThunk = (spot, owner, images) => async (dispatch) => {
     try {
@@ -101,6 +131,38 @@ export const allSpotsThunk = () => async (dispatch) => {
     }
 };
 
+export const deleteSpotThunk = (spotId) => async( dispatch) => {
+  const res = await csrfFetch('/api/spots/${spotId}' , {
+    method: 'DELETE'
+  })
+
+  if (res.ok ) { 
+    dispatch(deleteSpot(spotId))
+  } else {
+    const errorData = await res.json()
+    return errorData
+  }
+}
+
+export const updateSpotThunk = (spot) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spot.id}`, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(spot)
+  });
+  const updatedSpot = await res.json()
+  if (res.ok) {
+      dispatch(updateSpot(updatedSpot))
+      return updatedSpot
+  } else {
+      const errorData = await res.json()
+      return errorData
+  }
+}
+
+
     export const spotReducer = (state =  {}, action) => {
         let newState;
         switch(action.type) {
@@ -109,7 +171,16 @@ export const allSpotsThunk = () => async (dispatch) => {
                 return newState;
              case GET_SPOT_DETAILS:  
                 newState = {...state, singleSpot: action.spot}
-                return newState
+                return newState;
+              case DELETE_SPOT:
+                newState = {...state }  
+                delete newState[action.spotId];
+              case UPDATE_SPOT: 
+              newState = {... state, singleSpot: action.spot}
+              return newState;
+             case GET_USER_SPOTS:
+              newState = { ...state, allSpots: action.spot}
+              return newState 
         default:
           return state
     }

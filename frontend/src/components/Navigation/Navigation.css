@@ -1,2 +1,60 @@
 
 
+.header {
+    background-color: #fff;
+    padding: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Manrope", sans-serif;
+    margin-right: 30px;
+    margin-left: 25px;
+}
+
+button:first-child {
+    margin-right: 10px;
+}
+
+.home {
+    margin-right: 5px
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 100px;
+}
+
+.logInContainer {
+    display: flex;
+    align-items: center;
+}
+
+.createSpot {
+    margin-right: 10px;
+}
+
+.userProfile > button {
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    color: #FF5A5F;
+    cursor: pointer;
+}
+
+.navLinks > button {
+    border: none;
+    text-align: center;
+    background-color: #FF5A5F;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
