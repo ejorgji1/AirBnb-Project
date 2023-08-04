@@ -7,7 +7,7 @@ import { deleteSpotThunk } from "../../store/spot";
 import { getUserSpotsThunk } from "../../store/spot";
 
 
-function DeleteSpot ({spot}) {
+ function DeleteSpot ({spot}) {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -62,3 +62,5 @@ function DeleteSpot ({spot}) {
     )
     }
 }
+
+export default DeleteSpot
