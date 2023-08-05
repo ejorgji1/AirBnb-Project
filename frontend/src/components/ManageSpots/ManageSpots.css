@@ -1,0 +1,63 @@
+#spots-container {
+    display: flex;
+    margin-left: 18px;
+}
+
+.spot {
+    margin-bottom: 0px;
+}
+
+.manageSpot-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 8px;
+}
+
+#updateButton {
+    background-color: #afaeae;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #999999;
+    cursor: pointer;
+    color: white;
+}
+
+#updateButton:hover {
+    background-color: #999999;
+}
+
+.manageSpot-buttons > button {
+    background-color: #afaeae;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #999999;
+    cursor: pointer;
+}
+
+.manageSpot-buttons > button:hover {
+    background-color: #999999;
+}
+
+.manageHeader {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 30px;
+}
+
+.addSpotButton {
+    margin: 0px 30px 15px 30px;
+    background-color: #afaeae;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 1px 1px #999999;
+    cursor: pointer;
+    color: white;
+}
+
+.addSpotButton:hover {
+    background-color: #999999;
+}

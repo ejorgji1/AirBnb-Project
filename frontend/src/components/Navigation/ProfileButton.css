@@ -1,0 +1,58 @@
+.hidden {
+    display: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul li:nth-child(2) {
+    border-bottom: 1px solid #999999;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.fa-user-circle {
+    position: relative;
+    color: grey
+}
+
+ul {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-dropdown {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 7px 3px #CCCCCC;
+}
+
+.manageSpot {
+    padding-bottom: 10px;
+    padding-top: 5px;
+    border-bottom: 1px solid ;
+}
+
+li > button {
+    
+    text-align: center;
+    background-color: #999999;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    align-self: center;
+    border: 1px solid black;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.logOut {
+    margin-left: auto;
+    margin-right: auto;
+}

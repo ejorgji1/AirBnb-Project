@@ -1,13 +1,11 @@
-// frontend/src/components/SignupFormPage/index.js
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
 
-function SignupFormPage() {
+function SignupFormModal() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -15,8 +13,8 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-
-  //if (sessionUser) return <Redirect to="/" />;
+  const { closeModal } = useModal();
+  const [disabled, setDisabled] = useState(true)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,86 +28,104 @@ function SignupFormPage() {
           lastName,
           password,
         })
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+      )
+        .then(closeModal)
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            setErrors(data.errors);
+          }
+        });
     }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
   };
 
+  useEffect(() => {
+    if (!email.length || !username.length || username.length < 4 || !firstName.length || !lastName.length || !password.length || password.length < 6 || !confirmPassword.length) {
+      setDisabled(true)
+    } else {
+      setDisabled(false)}
+  }, [email, username, firstName, lastName, password, confirmPassword])
+
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="signUp-form-container" onSubmit={handleSubmit}>
+      <h1 className="signUp">Sign Up</h1>
         <label>
-          Email
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="signUp-input"
+            placeholder="Email"
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
         <label>
-          Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            className="signUp-input"
+            placeholder="Username"
           />
         </label>
         {errors.username && <p>{errors.username}</p>}
         <label>
-          First Name
+
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            className="signUp-input"
+            placeholder="First Name"
           />
         </label>
         {errors.firstName && <p>{errors.firstName}</p>}
         <label>
-          Last Name
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            className="signUp-input"
+            placeholder="Last Name"
           />
         </label>
         {errors.lastName && <p>{errors.lastName}</p>}
         <label>
-          Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="signUp-input"
+            placeholder="Password"
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
         <label>
-          Confirm Password
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            className="signUp-input"
+            placeholder="Confirm Password"
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && (
+          <p>{errors.confirmPassword}</p>
+        )}
+        <button className={disabled ? "createUser-button-inactive" : "createUser-button"} type="submit" disabled={disabled}>Sign Up</button>
       </form>
     </>
   );
 }
 
-export default SignupFormPage;
+export default SignupFormModal;
