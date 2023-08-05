@@ -26,6 +26,9 @@ export default function CreateSpot() {
     const [validationErrors, setValidationErrors] = useState({})
     const [submitted, setSubmitted] = useState(false)
 
+    const urlValidation = str => {
+        return /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/.test(str);
+    }
 
     useEffect(() => {
         const errorsObject = {};
@@ -147,6 +150,11 @@ export default function CreateSpot() {
             }
             imageArray.push(image4Obj)
         }
+// console.log( 'this is' , imagePreview);
+// console.log(image1);
+// console.log(image2);
+// console.log(image3);
+// console.log(image4);
 
         const newSpot = await dispatch(createSpotThunk(spot, owner, imageArray));
         // console.log(newSpot)
