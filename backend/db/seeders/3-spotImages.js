@@ -14,7 +14,7 @@ module.exports = {
       {
        
         spotId: 1,
-        url: 'https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg?auto=compress&cs=tinysrgb&w=600.jpeg',
+        url: 'https://http.cat/images/102.jpg',
         preview: true
       },
       {
@@ -38,7 +38,7 @@ module.exports = {
       {
        
         spotId: 2,
-        url: 'https://images.pexels.com/photos/2246476/pexels-photo-2246476.jpeg?auto=compress&cs=tinysrgb&w=600.jpeg',
+        url: 'https://http.cat/images/200.jpg',
         preview: false
       },
       {
