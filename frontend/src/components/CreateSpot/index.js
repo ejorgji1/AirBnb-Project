@@ -81,7 +81,7 @@ export default function CreateSpot() {
             errorsObject.imagePreview = "Preview image is required."
         }
         if (imagePreview && !imagePreview.match(/(\.png|\.jpg|\.jpeg)\s*$/)) {
-            errorsObject.imagePreview = "Image URL must end in .png, .jpg, or .jpeg.";
+            errorsObject.imagePreview = "iImage URL must end in .png, .jpg, or .jpeg.";
         }
         if (image1 && !image1.match(/(\.png|\.jpg|\.jpeg)\s*$/)) {
             errorsObject.image1 = "Image URL must end in .png, .jpg, or .jpeg.";
