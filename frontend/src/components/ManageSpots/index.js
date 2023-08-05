@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { getUserSpotsThunk } from "../../store/spot";
 import "./ManageSpots.css";
 import OpenModalButton from "../OpenModalButton";
-import DeleteSpot from "../DeleteSpot"
+import DeleteSpotModal from "../DeleteSpotModal";
 
 export default function ManageSpots() {
   const history = useHistory();
@@ -65,7 +65,7 @@ export default function ManageSpots() {
                     </Link>
                     <OpenModalButton
                       buttonText="Delete"
-                      modalComponent={<DeleteSpot spot={spot} />}
+                      modalComponent={<DeleteSpotModal spot={spot} />}
                     />
                   </div>
                 </div>

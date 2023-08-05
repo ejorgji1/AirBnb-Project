@@ -1,0 +1,45 @@
+.rating-input {
+    display: flex;
+    margin: auto;
+}
+
+#postReviewContainer {
+    margin: 100px auto;
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: 15px;
+    width: 350px;
+    align-items: center;
+    padding: 20px;
+    font-family: "Manrope", sans-serif;
+    margin: 20px auto;
+}
+
+.postReviewHeading {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+.comment-input {
+    background-color: #E8F0FE;
+    width: 100%;
+    padding: 5px 0px;
+}
+
+.filled {
+    color: black
+}
+
+.empty {
+    color: grey
+}
+
+.rating-input {
+    display: flex;
+    
+}
+
+.submit-button {
+    width: 100%;
+}

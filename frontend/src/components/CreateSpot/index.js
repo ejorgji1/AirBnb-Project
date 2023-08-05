@@ -149,7 +149,7 @@ export default function CreateSpot() {
         }
 
         const newSpot = await dispatch(createSpotThunk(spot, owner, imageArray));
-         console.log(newSpot)
+        // console.log(newSpot)
 
         setCity('');
         setCountry('');

@@ -131,16 +131,15 @@ export const allSpotsThunk = () => async (dispatch) => {
     }
 };
 
-export const deleteSpotThunk = (spotId) => async( dispatch) => {
-  const res = await csrfFetch('/api/spots/${spotId}' , {
-    method: 'DELETE'
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+      method: 'DELETE'
   })
-
-  if (res.ok ) { 
-    dispatch(deleteSpot(spotId))
+  if (res.ok) {
+      dispatch(deleteSpot(spotId))
   } else {
-    const errorData = await res.json()
-    return errorData
+      const errorData = await res.json()
+      return errorData
   }
 }
 
@@ -175,11 +174,12 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
               case DELETE_SPOT:
                 newState = {...state }  
                 delete newState[action.spotId];
+                return newState;
               case UPDATE_SPOT: 
               newState = {... state, singleSpot: action.spot}
               return newState;
              case GET_USER_SPOTS:
-              newState = { ...state, allSpots: action.spot}
+              newState = { ...state, allSpots: action.spots}
               return newState 
         default:
           return state

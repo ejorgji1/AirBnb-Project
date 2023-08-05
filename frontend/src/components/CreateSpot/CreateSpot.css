@@ -1,0 +1,174 @@
+.createSpotContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto
+}
+
+input {
+    width: 100%;
+    position: relative
+
+}
+
+.priceContainer {
+    display: flex;
+}
+
+.createSpotHeading {
+    font-size: 24pt;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+    margin: 2px;
+    font-size: 14px;
+
+}
+
+.locationInfo {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.cityStateContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.latLongContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputContainer {
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+.locationInfo {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.locationText {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.descriptionHeader {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.descriptionText {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.locationHeader {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.locationText {
+    font-size: 14px;
+}
+
+.titleHeader {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+.titleText {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.priceHeader {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+.priceText {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.imagesHeader {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+.imagesInfo {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.imagesText {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+
+.descriptionInfo {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.titleInfo {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.priceInfo {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+
+.submit-button {
+    color: black;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    padding: 10px 18px;
+    cursor: pointer;
+    width: 50%;
+    border: 1px solid #000000;
+    background-color: rgb(218, 156, 156);
+    color: white;
+    opacity: 0.8;
+}
+
+
+.submit-button:hover {
+    opacity: 0.8;
+    background-color: #FF5A5F;
+    color: white;
+} 
+
+.submitContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.priceContainer > input {
+    margin-left: 5px;
+}

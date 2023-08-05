@@ -2,22 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useModal } from "../../context/Modal";
-import './DeleteSpot.css'
+import './DeleteSpotModal.css'
 import { deleteSpotThunk } from "../../store/spot";
 import { getUserSpotsThunk } from "../../store/spot";
 
-
- function DeleteSpot ({spot}) {
+function DeleteSpotModal ({spot}) {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const dispatch = useDispatch();
     const history = useHistory();
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setErrors({});
-  
-      const handleSubmit = (e) => {
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
         return dispatch(deleteSpotThunk(spot.id))
@@ -35,32 +30,30 @@ import { getUserSpotsThunk } from "../../store/spot";
           );
       };
 
-
     return (
         <div className="deleteSpotContainer">
-        <div className="Header">Confirm Delete</div>
-        <div className="Text">Are you sure you want to remove this spot from your listings?</div>
-        <div>
-            <button
-            id="yes-Delete"
-            onClick={handleSubmit}
-            >
-                Yes (Delete Spot)
-            </button>
-            <button
-            id="no-Delete"
-            onClick={((e) => {
-              closeModal();
-              e.stopPropagation();
-              history.push('/spots/current')
-              })}
-            >
-                No (Keep Spot)
-            </button>
+            <div className="deleteHeader">Confirm Delete</div>
+            <div className="deleteText">Are you sure you want to remove this spot from your listings?</div>
+            <div>
+                <button
+                id="yesDelete"
+                onClick={handleSubmit}
+                >
+                    Yes (Delete Spot)
+                </button>
+                <button
+                id="noDelete"
+                onClick={((e) => {
+                  closeModal();
+                  e.stopPropagation();
+                  history.push('/spots/current')
+                  })}
+                >
+                    No (Keep Spot)
+                </button>
+            </div>
         </div>
-    </div>
     )
-    }
 }
 
-export default DeleteSpot
+export default DeleteSpotModal;

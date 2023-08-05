@@ -7,7 +7,7 @@ import { deleteReviewThunk } from '../../store/review';
 import { spotDetailThunk } from "../../store/spot";
 import { spotReviewsThunk } from "../../store/review";
 
-function DeleteReview ({spot, review}) {
+function DeleteReviewModal ({spot, review}) {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -55,4 +55,4 @@ function DeleteReview ({spot, review}) {
     )
 }
 
-export default DeleteReview;
+export default DeleteReviewModal;
