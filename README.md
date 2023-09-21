@@ -1,5 +1,5 @@
 # AirBnb
-test
+test2
 Database Schema Design
 <insert database schema design here>
    ![Untitled](https://github.com/ejorgji1/AirBnb-Project/assets/115188858/606b3187-8f70-48db-8391-317ca7240fb0)
